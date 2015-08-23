@@ -10,6 +10,13 @@ This will show (by default every 30 seconds) news from LeMonde.fr on
 your cinnamon desktop. You can choose how often it updates the
 "database" of news and how often it changes the news displayed.
 
+You can :
+
+* Choose the refresh rate of all the news
+* Choose the refresh rate of the display of each news
+* Choose whether you want pictures or not
+* Choose the size of the desklet
+
 Tested with Linux Mint 17.2 / Cinnamon 2.6.13 (Fully functional)
 
 ## This program is a free software :
