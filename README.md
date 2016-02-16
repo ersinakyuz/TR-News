@@ -1,12 +1,22 @@
-# LeMonde.fr Cinnamon Desklet
+This is the first release of TR-News
 
-![Screenshot](/capture.png)
+RSS news reader for Cinnamon. Based on LeMonde.fr Cinnamon Desklet (lemondenewspaper@fthuin)
 
-## This repository contains the content of "lemondenewspaper@fthuin".
-You can download it and move it in
-~/.local/share/cinnamon/desklets/lemondenewspaper@fthuin
+Added New Features:
 
-This will show (by default every 30 seconds) news from LeMonde.fr on
+    Optional RSS Sources option added.
+    Predefined additional Turkish News Resources added
+
+Bugs:
+
+    Some HTML tags still shown on desklet
+    Image still not working
+
+![Screenshot](/tr-news.png)
+
+
+
+This will show (by default every 30 seconds) news from Turkish News Sources on
 your cinnamon desktop. You can choose how often it updates the
 "database" of news and how often it changes the news displayed.
 
@@ -17,7 +27,8 @@ You can :
 * Choose whether you want pictures or not
 * Choose the size of the desklet
 
-Tested with Linux Mint 17.2 / Cinnamon 2.6.13 (Fully functional)
+Tested with Linux Mint 17.2 / Cinnamon 2.6.13 
+            Ubuntu 15.10
 
 ## This program is a free software :
 
