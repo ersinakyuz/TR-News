@@ -27,12 +27,13 @@ NewsDesklet.prototype = {
         this.setHeader(_("Le Monde.fr Newspaper"));
 
         this.settings = new Settings.DeskletSettings(this, this.metadata['uuid'], desklet_id);
+        this.settings.bindProperty(Settings.BindingDirection.IN, "news_source", "news_source", this._onDisplayChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "height", "height", this._onDisplayChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "width", "width", this._onDisplayChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "newsRefreshDelay" , "newsRefreshDelay", this._onSettingsChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "newsDisplayRefreshDelay", "newsDisplayRefreshDelay", this._onSettingsChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "displayImages", "displayImages", this._onDisplayChanged, null);
-        this.save_path = GLib.get_home_dir() + "/.local/share/cinnamon/desklets/lemondenewspaper@fthuin/icon.jpg" ;
+        this.save_path = GLib.get_home_dir() + "/.local/share/cinnamon/desklets/turkishnews@eakyuz/icon.jpg" ;
         this.update_news();
     },
 
@@ -59,8 +60,12 @@ NewsDesklet.prototype = {
     },
 
     get_news : function() {
-        var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feednormalizer%20where%20url%3D%27http%3A%2F%2Frss.lemonde.fr%2Fc%2F205%2Ff%2F3050%2Findex.rss%27%20and%20output%3D%27atom_1.0%27&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-        var urlcatch = Soup.Message.new("GET", ""+url);
+        //var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feednormalizer%20where%20url%3D%27http%3A%2F%2Fwww.halktv.com.tr%2F%2Ffeed%27%20and%20output%3D%27atom_1.0%27&format=json&env=store%3A%";
+        //var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feednormalizer%20where%20url%3D%27http%3A%2F%2Fwww.diken.com.tr%2F%2Ffeed%27%20and%20output%3D%27atom_1.0%27&format=json&env=store%3A%";
+	//var news_source = "http://www.t24.com.tr/rss"   
+	var news_source = "http://www.milliyet.com.tr/D/rss/rss/Rss_2.xml"   		
+	var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feednormalizer%20where%20url%3D%27"+this.news_source+"%27%20and%20output%3D%27atom_1.0%27&format=json&env=store%3A%";        
+	var urlcatch = Soup.Message.new("GET", ""+url);
         session.queue_message(urlcatch, Lang.bind(this, this._onMessageResponse));
     },
 
@@ -95,22 +100,36 @@ NewsDesklet.prototype = {
 
         var endOfSummary = news[newsNumber]['summary']['content'].indexOf("<br");
         var contentSnippet = news[newsNumber]['summary']['content'].slice(0, endOfSummary);
+//          var imgurl=/\"http:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]jpeg\"$))?/.exec(contentSnippet);
+        var imgurl=/\"http:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]\.jpg\"$))?/.exec(contentSnippet);
+
+
         var newsContentSnippet = new St.Label({
                 text : contentSnippet,
                 style_class : "news-content",
         });
+
+
+
+
         newsContentSnippet.clutter_text.set_line_wrap(true);
         newsContentSnippet.clutter_text.set_line_wrap_mode(imports.gi.Pango.WrapMode.WORD_CHAR);
         newsContentSnippet.clutter_text.set_single_line_mode(false);
         newsContentSnippet.clutter_text.set_offscreen_redirect(imports.gi.Clutter.OffscreenRedirect.ALWAYS);
         newsTitleBox.add_actor(newsContentSnippet);
 
+ 
+
         if (this.displayImages) {
             this.newsIcon = new St.Bin({
                     height : this.width/3,
                     width : this.heigth/3
             });
-            var iconURL = news[newsNumber]['link']['1']['href'];
+            
+            var iconFilter = /\<IMG align\=\"left\" src=\"(.*?)\"\>/g;
+            var iconURL = news[newsNumber]['summary']['content']['1'];
+            iconURL = iconFilter.exec(iconURL);
+            
             var iconUrlcatch = Soup.Message.new("GET", ""+ iconURL);
             session.queue_message(iconUrlcatch, Lang.bind(this, this._onIconLoaded));
             newsTitleBox.add_actor(this.newsIcon);
@@ -118,7 +137,7 @@ NewsDesklet.prototype = {
 
         var readMoreButton = new St.Button();
         var readMoreLabel = new St.Label({
-                text : "Lire plus sur le site web",
+                text : "Devamı için tıklayın...",
         });
         readMoreButton.add_actor(readMoreLabel);
         readMoreButton.connect("clicked", function(button, event) {

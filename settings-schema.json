@@ -3,8 +3,24 @@
         "type" : "header",
         "description" : "Desklet Settings"
     },
-
-    "height" : {
+    "Predefined Sources" : {
+	"type" : "radiogroup",
+   	"default" : "http://www.t24.com.tr/rss",
+        "description" : "Predefined Sources :",
+	"options" : {
+		    "BBC Türkçe" : "bbc",
+		    "Cumhuriyet" : "cumhuriyet",
+		    "HalkTV" : "other value",
+		    "Hürriyet" : "that value",
+		    "T24" : "http://www.t24.com.tr/rss"
+		}
+    },
+        "news_source": {
+        "type": "entry",
+        "description" : "News Source:",
+        "default": "http://www.milliyet.com.tr/D/rss/rss/Rss_2.xml"
+    },
+        "height" : {
         "default" : 300,
         "type" : "spinbutton",
         "min" : 50,
@@ -43,9 +59,8 @@
         "units" : "seconds",
         "step" : 1
     },
-
     "displayImages" : {
-        "default" : true,
+        "default" : false,
         "description" : "Display images",
         "type" : "checkbox",
         "tooltip" : "Check this if you want to show images with the content"
