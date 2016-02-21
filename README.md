@@ -6,10 +6,10 @@ Added New Features:
 
     Optional RSS Sources option added.
     Predefined additional Turkish News Resources added
+    HTML Tags stripped from main window
 
 Bugs:
 
-    Some HTML tags still shown on desklet
     Image still not working
 
 ![Screenshot](/tr-news.png)
