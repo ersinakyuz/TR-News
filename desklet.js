@@ -105,7 +105,7 @@ NewsDesklet.prototype = {
 
 
         var newsContentSnippet = new St.Label({
-                text : contentSnippet,
+                text : contentSnippet.replace(/(<([^>]+)>)/ig,""), //html tags stripped with .replace
                 style_class : "news-content",
         });
 
