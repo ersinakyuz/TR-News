@@ -24,7 +24,7 @@ NewsDesklet.prototype = {
 
     _init : function(metadata, desklet_id) {
         Desklet.Desklet.prototype._init.call(this, metadata, desklet_id);
-        this.setHeader(_("Le Monde.fr Newspaper"));
+        this.setHeader(_("TurkishNews RSS"));
 
         this.settings = new Settings.DeskletSettings(this, this.metadata['uuid'], desklet_id);
         this.settings.bindProperty(Settings.BindingDirection.IN, "news_source", "news_source", this._onDisplayChanged, null);
@@ -33,7 +33,7 @@ NewsDesklet.prototype = {
         this.settings.bindProperty(Settings.BindingDirection.IN, "newsRefreshDelay" , "newsRefreshDelay", this._onSettingsChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "newsDisplayRefreshDelay", "newsDisplayRefreshDelay", this._onSettingsChanged, null);
         this.settings.bindProperty(Settings.BindingDirection.IN, "displayImages", "displayImages", this._onDisplayChanged, null);
-        this.save_path = GLib.get_home_dir() + "/.local/share/cinnamon/desklets/turkishnews@eakyuz/icon.jpg" ;
+        this.save_path = GLib.get_home_dir() + "/.local/share/cinnamon/desklets/trnews@eakyuz/icon.jpg" ;
         this.update_news();
     },
 
